@@ -1,0 +1,73 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+*.log
+logs/
+
+# Environment variables
+.env
+
+# Backups
+scripts/backups/
+*.sql
+*.sql.gz
+*.tar.gz
+
+# Docker
+.dockerignore
+
+# Database data (if running locally)
+mysql_data/
+mongodb_data/
+
+# Node modules (if added later)
+node_modules/
+
+# Temp files
+tmp/
+temp/
+*.tmp
+
+# Archivos obsoletos del proyecto
+backend/app_old.py
+backend/static/archivos_antiguos/
+frontend/
+
+# Documentación obsoleta (mantener solo README.md)
+*.md
+!README.md
+
+# Archivos de ejemplo
+.env.example

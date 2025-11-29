@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard Admin{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div style="max-width: 1200px; margin: 0 auto;">
+        <h2 style="text-align: center; margin-bottom: 40px; font-weight: 900;">PANEL DE ADMINISTRACIÓN</h2>
+        
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-bottom: 40px;">
+            <div style="background: white; padding: 30px; border-radius: 8px; text-align: center;">
+                <p style="color: #767677; font-size: 14px; margin-bottom: 10px;">TOTAL CLIENTES</p>
+                <p style="font-weight: 900; font-size: 48px; color: #ff6b00;">{{ stats.total_clientes or 0 }}</p>
+            </div>
+            <div style="background: white; padding: 30px; border-radius: 8px; text-align: center;">
+                <p style="color: #767677; font-size: 14px; margin-bottom: 10px;">TOTAL PEDIDOS</p>
+                <p style="font-weight: 900; font-size: 48px; color: #ff6b00;">{{ stats.total_pedidos or 0 }}</p>
+            </div>
+            <div style="background: white; padding: 30px; border-radius: 8px; text-align: center;">
+                <p style="color: #767677; font-size: 14px; margin-bottom: 10px;">INGRESOS TOTALES</p>
+                <p style="font-weight: 900; font-size: 48px; color: #ff6b00;">${{ "%.2f"|format(stats.ingresos_totales or 0) }}</p>
+            </div>
+        </div>
+        
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px;">
+            <div style="background: white; padding: 30px; border-radius: 8px; text-align: center;">
+                <p style="color: #767677; font-size: 14px; margin-bottom: 10px;">PEDIDOS PENDIENTES</p>
+                <p style="font-weight: 900; font-size: 36px;">{{ stats.pedidos_pendientes or 0 }}</p>
+            </div>
+            <div style="background: white; padding: 30px; border-radius: 8px; text-align: center;">
+                <p style="color: #767677; font-size: 14px; margin-bottom: 10px;">PRODUCTOS ACTIVOS</p>
+                <p style="font-weight: 900; font-size: 36px;">{{ total_productos or 0 }}</p>
+            </div>
+            <div style="background: white; padding: 30px; border-radius: 8px; text-align: center;">
+                <a href="{{ url_for('admin_pedidos') }}" class="btn btn-primary" style="width: 100%; padding: 15px; font-size: 16px; margin-bottom: 10px;">
+                    VER TODOS LOS PEDIDOS
+                </a>
+                <a href="{{ url_for('admin_inventario') }}" class="btn btn-secondary" style="width: 100%; padding: 15px; font-size: 16px;">
+                    GESTIONAR INVENTARIO
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

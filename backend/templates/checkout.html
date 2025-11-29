@@ -1,0 +1,303 @@
+{% extends 'base.html' %}
+
+{% block title %}Checkout{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div style="max-width: 1200px; margin: 0 auto;">
+        <h2 style="text-align: center; margin-bottom: 40px; font-weight: 900;">FINALIZAR COMPRA</h2>
+        
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 40px;">
+            <!-- Formulario de envío -->
+            <div style="background: white; padding: 30px; border-radius: 8px;">
+                <h3 style="font-weight: 700; margin-bottom: 20px;">DIRECCIÓN DE ENVÍO</h3>
+                
+                <form method="POST" action="{{ url_for('checkout') }}" id="checkoutForm">
+                    <div class="form-group">
+                        <label class="form-label">Calle o Número</label>
+                        <input type="text" name="calle" class="form-input" required placeholder="Ej: Avenida Reforma o 42">
+                        <small style="color: #767677; font-size: 12px;">Escribe el nombre o solo el número si tu calle es numérica</small>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div class="form-group">
+                            <label class="form-label">Número Exterior</label>
+                            <input type="text" name="numero" class="form-input" required placeholder="Ej: 123 o S/N">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Número Interior (Opcional)</label>
+                            <input type="text" name="numero_int" class="form-input" placeholder="Ej: 4-B">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Código Postal</label>
+                        <div style="display: flex; gap: 10px; align-items: center;">
+                            <input type="text" name="codigo_postal" id="codigoPostal" class="form-input" required placeholder="Ej: 44100" pattern="[0-9]{5}" maxlength="5" style="flex: 1;">
+                            <button type="button" id="btnBuscarCP" class="btn btn-secondary" style="padding: 12px 20px; white-space: nowrap;">
+                                Buscar
+                            </button>
+                        </div>
+                        <small style="color: #767677; font-size: 12px; display: block; margin-top: 5px;">
+                            <span id="cpStatus">Ingresa 5 dígitos y presiona Buscar</span>
+                        </small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Colonia</label>
+                        <select name="colonia" id="coloniaSelect" class="form-input" required>
+                            <option value="">Primero ingresa el código postal</option>
+                        </select>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div class="form-group">
+                            <label class="form-label">Municipio</label>
+                            <input type="text" name="municipio" id="municipioInput" class="form-input" required readonly>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Estado</label>
+                            <input type="text" name="estado" id="estadoInput" class="form-input" required readonly>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Referencias (Opcional)</label>
+                        <textarea name="referencias" class="form-input" rows="2" placeholder="Ej: Entre calle 5 y 7"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" style="width: 100%; font-size: 18px; padding: 15px;">
+                        CONFIRMAR PEDIDO
+                    </button>
+                </form>
+            </div>
+            
+            <script>
+            // Función para buscar información por código postal
+            async function buscarCodigoPostal(cp) {
+                const coloniaSelect = document.getElementById('coloniaSelect');
+                const municipioInput = document.getElementById('municipioInput');
+                const estadoInput = document.getElementById('estadoInput');
+                const cpStatus = document.getElementById('cpStatus');
+                
+                // Mostrar indicador de carga
+                coloniaSelect.innerHTML = '<option value="">Buscando...</option>';
+                coloniaSelect.disabled = true;
+                municipioInput.value = 'Cargando...';
+                estadoInput.value = 'Cargando...';
+                cpStatus.textContent = 'Buscando información...';
+                cpStatus.style.color = '#ff6b00';
+                
+                try {
+                    console.log('Buscando CP:', cp);
+                    
+                    // Usar API local del backend (más rápida y sin dependencias externas)
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 5000); // Timeout de 5 segundos
+                    
+                    const response = await fetch(`/api/buscar-cp/${cp}`, {
+                        signal: controller.signal
+                    });
+                    clearTimeout(timeoutId);
+                    
+                    if (!response.ok) {
+                        throw new Error('Error en la respuesta');
+                    }
+                    
+                    const result = await response.json();
+                    console.log('Respuesta:', result);
+                    
+                    // Verificar si hay datos
+                    if (result.error === false && result.response && result.response.colonia) {
+                        const colonias = result.response.colonia;
+                        const municipio = result.response.municipio;
+                        const estado = result.response.estado;
+                        
+                        // Llenar select de colonias
+                        coloniaSelect.innerHTML = '<option value="">Selecciona una colonia</option>';
+                        
+                        colonias.forEach(col => {
+                            const option = document.createElement('option');
+                            option.value = col;
+                            option.textContent = col;
+                            coloniaSelect.appendChild(option);
+                        });
+                        
+                        // Llenar municipio y estado
+                        municipioInput.value = municipio;
+                        estadoInput.value = estado;
+                        coloniaSelect.disabled = false;
+                        
+                        // Mostrar mensaje de éxito
+                        coloniaSelect.style.borderColor = '#28a745';
+                        municipioInput.style.borderColor = '#28a745';
+                        estadoInput.style.borderColor = '#28a745';
+                        
+                        cpStatus.textContent = `✓ ${colonias.length} colonia(s) encontrada(s)`;
+                        cpStatus.style.color = '#28a745';
+                        
+                        setTimeout(() => {
+                            coloniaSelect.style.borderColor = '';
+                            municipioInput.style.borderColor = '';
+                            estadoInput.style.borderColor = '';
+                        }, 3000);
+                        
+                    } else {
+                        throw new Error('Código postal no encontrado en la base de datos');
+                    }
+                    
+                } catch (error) {
+                    console.error('Error al buscar CP:', error);
+                    
+                    // Habilitar entrada manual completa
+                    const coloniaContainer = coloniaSelect.parentElement;
+                    
+                    // Verificar si ya es un input, si no, convertirlo
+                    if (coloniaSelect.tagName === 'SELECT') {
+                        const newInput = document.createElement('input');
+                        newInput.type = 'text';
+                        newInput.name = 'colonia';
+                        newInput.id = 'coloniaInput';
+                        newInput.className = 'form-input';
+                        newInput.required = true;
+                        newInput.placeholder = 'Escribe tu colonia';
+                        coloniaContainer.replaceChild(newInput, coloniaSelect);
+                    }
+                    
+                    // Hacer campos editables
+                    municipioInput.readOnly = false;
+                    estadoInput.readOnly = false;
+                    municipioInput.value = '';
+                    estadoInput.value = '';
+                    municipioInput.placeholder = 'Escribe tu municipio';
+                    estadoInput.placeholder = 'Escribe tu estado';
+                    
+                    if (error.name === 'AbortError') {
+                        cpStatus.textContent = '⚠ Timeout - Completa manualmente';
+                    } else {
+                        cpStatus.textContent = '⚠ CP no encontrado - Completa manualmente';
+                    }
+                    cpStatus.style.color = '#ffc107';
+                    
+                    municipioInput.style.borderColor = '#ffc107';
+                    estadoInput.style.borderColor = '#ffc107';
+                }
+            }
+            
+            // Evento para el botón de buscar CP
+            document.getElementById('btnBuscarCP').addEventListener('click', function() {
+                const cp = document.getElementById('codigoPostal').value.trim();
+                const cpStatus = document.getElementById('cpStatus');
+                
+                if (cp.length === 5 && /^\d{5}$/.test(cp)) {
+                    cpStatus.textContent = 'Buscando información...';
+                    cpStatus.style.color = '#ff6b00';
+                    buscarCodigoPostal(cp);
+                } else {
+                    cpStatus.textContent = 'Por favor ingresa 5 dígitos';
+                    cpStatus.style.color = '#dc3545';
+                }
+            });
+            
+            // También buscar al presionar Enter en el campo de CP
+            document.getElementById('codigoPostal').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    document.getElementById('btnBuscarCP').click();
+                }
+            });
+            
+            // Actualizar el estado visual mientras escribe
+            document.getElementById('codigoPostal').addEventListener('input', function(e) {
+                const cp = e.target.value.trim();
+                const cpStatus = document.getElementById('cpStatus');
+                const btnBuscar = document.getElementById('btnBuscarCP');
+                
+                if (cp.length === 5 && /^\d{5}$/.test(cp)) {
+                    cpStatus.textContent = 'Presiona Buscar para cargar la información';
+                    cpStatus.style.color = '#28a745';
+                    btnBuscar.style.backgroundColor = '#28a745';
+                    btnBuscar.style.borderColor = '#28a745';
+                } else if (cp.length > 0) {
+                    cpStatus.textContent = `Faltan ${5 - cp.length} dígitos`;
+                    cpStatus.style.color = '#767677';
+                    btnBuscar.style.backgroundColor = '';
+                    btnBuscar.style.borderColor = '';
+                } else {
+                    cpStatus.textContent = 'Ingresa 5 dígitos y presiona Buscar';
+                    cpStatus.style.color = '#767677';
+                    btnBuscar.style.backgroundColor = '';
+                    btnBuscar.style.borderColor = '';
+                    
+                    // Resetear campos
+                    document.getElementById('coloniaSelect').innerHTML = '<option value="">Primero ingresa el código postal</option>';
+                    document.getElementById('municipioInput').value = '';
+                    document.getElementById('estadoInput').value = '';
+                }
+            });
+            
+            // Validación del formulario antes de enviar
+            document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+                const colonia = document.getElementById('coloniaSelect').value;
+                const municipio = document.getElementById('municipioInput').value;
+                const estado = document.getElementById('estadoInput').value;
+                
+                if (!colonia || colonia === '' || colonia === 'Buscando...') {
+                    e.preventDefault();
+                    alert('Por favor selecciona una colonia');
+                    return false;
+                }
+                
+                if (!municipio || municipio === 'Cargando...' || municipio === '') {
+                    e.preventDefault();
+                    alert('Por favor completa el municipio');
+                    return false;
+                }
+                
+                if (!estado || estado === 'Cargando...' || estado === '') {
+                    e.preventDefault();
+                    alert('Por favor completa el estado');
+                    return false;
+                }
+                
+                return true;
+            });
+            
+            // Cargar automáticamente si hay un CP al cargar la página (para cuando vuelve atrás)
+            window.addEventListener('load', function() {
+                const cp = document.getElementById('codigoPostal').value;
+                if (cp && cp.length === 5) {
+                    buscarCodigoPostal(cp);
+                }
+            });
+            </script>
+            
+            <!-- Resumen del pedido -->
+            <div style="background: white; padding: 30px; border-radius: 8px;">
+                <h3 style="font-weight: 700; margin-bottom: 20px;">RESUMEN DEL PEDIDO</h3>
+                
+                <div style="border-bottom: 1px solid #eee; padding-bottom: 15px; margin-bottom: 15px;">
+                    {% for item in cart_items %}
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                        <div>
+                            <strong>{{ item.nombre }}</strong><br>
+                            <small style="color: #767677;">Talla: {{ item.size }} | Cant: {{ item.quantity }}</small>
+                        </div>
+                        <div style="font-weight: 700;">
+                            ${{ "%.2f"|format(item.subtotal) }}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                <div style="display: flex; justify-content: space-between; font-size: 20px; font-weight: 900; margin-top: 20px;">
+                    <span>TOTAL:</span>
+                    <span style="color: #ff6b00;">${{ "%.2f"|format(total) }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

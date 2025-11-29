@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}Agregar Producto{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div style="max-width: 800px; margin: 0 auto;">
+        <a href="{{ url_for('admin_inventario') }}" class="btn btn-secondary" style="margin-bottom: 20px;">VOLVER AL INVENTARIO</a>
+        
+        <div style="background: white; padding: 40px; border-radius: 8px;">
+            <h2 style="font-weight: 900; margin-bottom: 30px;">AGREGAR NUEVO PRODUCTO AL INVENTARIO</h2>
+            
+            <form method="POST">
+                <div class="form-group">
+                    <label class="form-label">SKU (Código único del producto)</label>
+                    <input type="text" name="sku" class="form-input" 
+                           placeholder="Ejemplo: RM-HOME-2024-L" required>
+                    <small style="color: #767677;">Formato recomendado: EQUIPO-TIPO-AÑO-TALLA</small>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">NOMBRE DEL PRODUCTO</label>
+                    <input type="text" name="nombre" class="form-input" 
+                           placeholder="Ejemplo: Real Madrid Jersey Home 2024" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">TALLA</label>
+                    <select name="talla" class="form-input" required>
+                        <option value="">Selecciona una talla</option>
+                        <option value="S">S (Small)</option>
+                        <option value="M">M (Medium)</option>
+                        <option value="L">L (Large)</option>
+                        <option value="XL">XL (Extra Large)</option>
+                        <option value="XXL">XXL (Extra Extra Large)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">CANTIDAD INICIAL</label>
+                    <input type="number" name="cantidad" class="form-input" 
+                           min="0" value="50" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">PRECIO UNITARIO</label>
+                    <input type="number" name="precio" class="form-input" 
+                           step="0.01" min="0" value="1299.00" required>
+                </div>
+                
+                <div style="border-left: 4px solid #ff6b00; padding: 15px; background: #fff3cd; margin: 20px 0; border-radius: 4px;">
+                    <strong>IMPORTANTE:</strong> Asegúrate de que el SKU sea único. Si ya existe un producto con el mismo SKU, no se podrá agregar.
+                </div>
+                
+                <div style="display: flex; gap: 10px;">
+                    <button type="submit" class="btn btn-primary" style="flex: 1;">AGREGAR PRODUCTO</button>
+                    <a href="{{ url_for('admin_inventario') }}" class="btn btn-secondary" style="flex: 1; text-align: center;">CANCELAR</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,89 @@
+version: '3.8'
+
+services:
+  # Servicio MySQL
+  mysql_db:
+    image: mysql:8.0
+    container_name: mysql_ecommerce
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: ecommerce_db
+      MYSQL_USER: ecommerce_user
+      MYSQL_PASSWORD: ecommerce_pass
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./database/mysql:/docker-entrypoint-initdb.d
+    networks:
+      - ecommerce_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  # Servicio MongoDB
+  mongodb_db:
+    image: mongo:6.0
+    container_name: mongodb_ecommerce
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: adminpassword
+      MONGO_INITDB_DATABASE: ecommerce_catalog
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+      - ./database/mongodb:/docker-entrypoint-initdb.d
+    networks:
+      - ecommerce_network
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 10s
+      timeout: 10s
+      retries: 5
+
+  # Servicio Backend Python
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: backend_ecommerce
+    environment:
+      # MySQL Configuration
+      MYSQL_HOST: mysql_db
+      MYSQL_PORT: 3306
+      MYSQL_DATABASE: ecommerce_db
+      MYSQL_USER: ecommerce_user
+      MYSQL_PASSWORD: ecommerce_pass
+      # MongoDB Configuration
+      MONGODB_HOST: mongodb_db
+      MONGODB_PORT: 27017
+      MONGODB_DATABASE: ecommerce_catalog
+      MONGODB_USER: admin
+      MONGODB_PASSWORD: adminpassword
+      # Application Configuration
+      FLASK_ENV: development
+      SECRET_KEY: tu_clave_secreta_muy_segura_cambiala
+      EXTERNAL_PORT: 5001
+    ports:
+      - "5001:5001"
+    volumes:
+      - ./backend:/app
+      - ./scripts:/app/scripts
+    depends_on:
+      mysql_db:
+        condition: service_healthy
+      mongodb_db:
+        condition: service_healthy
+    networks:
+      - ecommerce_network
+    command: python app_new.py
+
+networks:
+  ecommerce_network:
+    driver: bridge
+
+volumes:
+  mysql_data:
+  mongodb_data:
