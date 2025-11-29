@@ -41,9 +41,13 @@ logs/
 
 # Backups
 scripts/backups/
-*.sql
+scripts/backups/*.sql
 *.sql.gz
 *.tar.gz
+
+# Permitir archivos SQL de inicialización de bases de datos
+!database/mysql/*.sql
+!database/mongodb/*.js
 
 # Docker
 .dockerignore
