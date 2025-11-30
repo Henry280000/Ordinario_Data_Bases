@@ -235,18 +235,53 @@ INSERT INTO Usuarios (nombre, email, password_hash, rol) VALUES
 ('Juan Pérez', 'juan@email.com', '$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewY5GyYqGRzFvBd6', 'CLIENTE'),
 ('María García', 'maria@email.com', '$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewY5GyYqGRzFvBd6', 'CLIENTE');
 
--- Insertar inventario de prueba
+-- Insertar inventario de prueba (36 SKUs: 9 equipos x 4 tallas)
 INSERT INTO Inventario (sku, producto_id, nombre_producto, talla, cantidad_disponible, precio_unitario) VALUES
+-- Barcelona
+('BAR-HOME-2024-S', 'jersey_bar_home_2024', 'Barcelona Jersey Home 2024', 'S', 35, 89.99),
+('BAR-HOME-2024-M', 'jersey_bar_home_2024', 'Barcelona Jersey Home 2024', 'M', 40, 89.99),
+('BAR-HOME-2024-L', 'jersey_bar_home_2024', 'Barcelona Jersey Home 2024', 'L', 35, 89.99),
+('BAR-HOME-2024-XL', 'jersey_bar_home_2024', 'Barcelona Jersey Home 2024', 'XL', 28, 89.99),
+-- Real Madrid
+('RM-HOME-2024-S', 'jersey_rm_home_2024', 'Real Madrid Jersey Home 2024', 'S', 45, 89.99),
 ('RM-HOME-2024-M', 'jersey_rm_home_2024', 'Real Madrid Jersey Home 2024', 'M', 50, 89.99),
 ('RM-HOME-2024-L', 'jersey_rm_home_2024', 'Real Madrid Jersey Home 2024', 'L', 30, 89.99),
 ('RM-HOME-2024-XL', 'jersey_rm_home_2024', 'Real Madrid Jersey Home 2024', 'XL', 25, 89.99),
-('BAR-HOME-2024-M', 'jersey_bar_home_2024', 'Barcelona Jersey Home 2024', 'M', 40, 89.99),
-('BAR-HOME-2024-L', 'jersey_bar_home_2024', 'Barcelona Jersey Home 2024', 'L', 35, 89.99),
+-- Manchester United
+('MAN-HOME-2024-S', 'jersey_man_home_2024', 'Manchester United Jersey Home 2024', 'S', 40, 79.99),
 ('MAN-HOME-2024-M', 'jersey_man_home_2024', 'Manchester United Jersey Home 2024', 'M', 45, 79.99),
 ('MAN-HOME-2024-L', 'jersey_man_home_2024', 'Manchester United Jersey Home 2024', 'L', 38, 79.99),
+('MAN-HOME-2024-XL', 'jersey_man_home_2024', 'Manchester United Jersey Home 2024', 'XL', 32, 79.99),
+-- Liverpool
+('LIV-HOME-2024-S', 'jersey_liv_home_2024', 'Liverpool Jersey Home 2024', 'S', 38, 79.99),
 ('LIV-HOME-2024-M', 'jersey_liv_home_2024', 'Liverpool Jersey Home 2024', 'M', 42, 79.99),
 ('LIV-HOME-2024-L', 'jersey_liv_home_2024', 'Liverpool Jersey Home 2024', 'L', 33, 79.99),
-('PSG-HOME-2024-M', 'jersey_psg_home_2024', 'PSG Jersey Home 2024', 'M', 30, 84.99);
+('LIV-HOME-2024-XL', 'jersey_liv_home_2024', 'Liverpool Jersey Home 2024', 'XL', 30, 79.99),
+-- PSG
+('PSG-HOME-2024-S', 'jersey_psg_home_2024', 'PSG Jersey Home 2024', 'S', 28, 84.99),
+('PSG-HOME-2024-M', 'jersey_psg_home_2024', 'PSG Jersey Home 2024', 'M', 30, 84.99),
+('PSG-HOME-2024-L', 'jersey_psg_home_2024', 'PSG Jersey Home 2024', 'L', 25, 84.99),
+('PSG-HOME-2024-XL', 'jersey_psg_home_2024', 'PSG Jersey Home 2024', 'XL', 22, 84.99),
+-- Bayern Munich
+('BAY-HOME-2024-S', 'jersey_bay_home_2024', 'Bayern Munich Jersey Home 2024', 'S', 32, 84.99),
+('BAY-HOME-2024-M', 'jersey_bay_home_2024', 'Bayern Munich Jersey Home 2024', 'M', 35, 84.99),
+('BAY-HOME-2024-L', 'jersey_bay_home_2024', 'Bayern Munich Jersey Home 2024', 'L', 30, 84.99),
+('BAY-HOME-2024-XL', 'jersey_bay_home_2024', 'Bayern Munich Jersey Home 2024', 'XL', 28, 84.99),
+-- Club América
+('AME-HOME-2024-S', 'jersey_ame_home_2024', 'Club América Jersey Home 2024', 'S', 40, 84.99),
+('AME-HOME-2024-M', 'jersey_ame_home_2024', 'Club América Jersey Home 2024', 'M', 45, 84.99),
+('AME-HOME-2024-L', 'jersey_ame_home_2024', 'Club América Jersey Home 2024', 'L', 38, 84.99),
+('AME-HOME-2024-XL', 'jersey_ame_home_2024', 'Club América Jersey Home 2024', 'XL', 35, 84.99),
+-- Borussia Dortmund
+('DOR-HOME-2024-S', 'jersey_dor_home_2024', 'Borussia Dortmund Jersey Home 2024', 'S', 35, 79.99),
+('DOR-HOME-2024-M', 'jersey_dor_home_2024', 'Borussia Dortmund Jersey Home 2024', 'M', 40, 79.99),
+('DOR-HOME-2024-L', 'jersey_dor_home_2024', 'Borussia Dortmund Jersey Home 2024', 'L', 35, 79.99),
+('DOR-HOME-2024-XL', 'jersey_dor_home_2024', 'Borussia Dortmund Jersey Home 2024', 'XL', 30, 79.99),
+-- Inter Miami
+('MIA-HOME-2024-S', 'jersey_mia_home_2024', 'Inter Miami Jersey Home 2024', 'S', 38, 84.99),
+('MIA-HOME-2024-M', 'jersey_mia_home_2024', 'Inter Miami Jersey Home 2024', 'M', 42, 84.99),
+('MIA-HOME-2024-L', 'jersey_mia_home_2024', 'Inter Miami Jersey Home 2024', 'L', 36, 84.99),
+('MIA-HOME-2024-XL', 'jersey_mia_home_2024', 'Inter Miami Jersey Home 2024', 'XL', 33, 84.99);
 
 -- ============================================
 -- VERIFICACIÓN FINAL
