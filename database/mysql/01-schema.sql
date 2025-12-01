@@ -202,10 +202,11 @@ END //
 DELIMITER ;
 
 -- Insertar usuarios de prueba
+-- Contraseña para todos: password123
 INSERT INTO Usuarios (nombre, email, password_hash, rol) VALUES
-('Administrador', 'admin@jerseys.com', '$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewY5GyYqGRzFvBd6', 'ADMIN'),
-('Juan Pérez', 'juan@email.com', '$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewY5GyYqGRzFvBd6', 'CLIENTE'),
-('María García', 'maria@email.com', '$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewY5GyYqGRzFvBd6', 'CLIENTE');
+('Administrador', 'admin@jerseys.com', '$2b$12$sV7uqAT364lOniJ0hMYbzud2T7QRTqe6RFWIMJOuMpvZxXBw2w.Ey', 'ADMIN'),
+('Juan Pérez', 'juan@email.com', '$2b$12$sV7uqAT364lOniJ0hMYbzud2T7QRTqe6RFWIMJOuMpvZxXBw2w.Ey', 'CLIENTE'),
+('María García', 'maria@email.com', '$2b$12$sV7uqAT364lOniJ0hMYbzud2T7QRTqe6RFWIMJOuMpvZxXBw2w.Ey', 'CLIENTE');
 
 -- Insertar inventario de prueba (36 SKUs: 9 equipos x 4 tallas)
 INSERT INTO Inventario (sku, producto_id, nombre_producto, talla, cantidad_disponible, precio_unitario) VALUES

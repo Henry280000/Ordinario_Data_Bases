@@ -19,8 +19,7 @@ db.jerseys.insertMany([
         descripcion: "Jersey oficial del Real Madrid temporada 2024/2025. Incluye tecnología Climacool para máxima ventilación.",
         categoria: "Clubes Europeos",
         imagenes: [
-            "https://example.com/jerseys/real-madrid-home-2024-front.jpg",
-            "https://example.com/jerseys/real-madrid-home-2024-back.jpg"
+            "/static/images/jerseys/jersey_rm_home_2024.png"
         ],
         tallas_disponibles: ["S", "M", "L", "XL", "XXL"],
         caracteristicas: {
@@ -48,8 +47,7 @@ db.jerseys.insertMany([
         descripcion: "Jersey oficial del FC Barcelona temporada 2024/2025. Diseño icónico con rayas blaugrana y tecnología Dri-FIT.",
         categoria: "Clubes Europeos",
         imagenes: [
-            "https://example.com/jerseys/barcelona-home-2024-front.jpg",
-            "https://example.com/jerseys/barcelona-home-2024-back.jpg"
+            "/static/images/jerseys/jersey_bar_home_2024.png"
         ],
         tallas_disponibles: ["S", "M", "L", "XL", "XXL"],
         caracteristicas: {
@@ -77,8 +75,7 @@ db.jerseys.insertMany([
         descripcion: "Jersey oficial del Manchester United temporada 2024/2025. Rojo clásico con detalles en negro.",
         categoria: "Premier League",
         imagenes: [
-            "https://example.com/jerseys/man-utd-home-2024-front.jpg",
-            "https://example.com/jerseys/man-utd-home-2024-back.jpg"
+            "/static/images/jerseys/jersey_man_home_2024.png"
         ],
         tallas_disponibles: ["S", "M", "L", "XL", "XXL"],
         caracteristicas: {
@@ -106,8 +103,7 @@ db.jerseys.insertMany([
         descripcion: "Jersey oficial del Liverpool FC temporada 2024/2025. Rojo intenso con tecnología de ventilación.",
         categoria: "Premier League",
         imagenes: [
-            "https://example.com/jerseys/liverpool-home-2024-front.jpg",
-            "https://example.com/jerseys/liverpool-home-2024-back.jpg"
+            "/static/images/jerseys/jersey_liv_home_2024.png"
         ],
         tallas_disponibles: ["S", "M", "L", "XL"],
         caracteristicas: {
@@ -135,8 +131,7 @@ db.jerseys.insertMany([
         descripcion: "Jersey oficial del PSG temporada 2024/2025. Azul marino con franja central roja.",
         categoria: "Clubes Europeos",
         imagenes: [
-            "https://example.com/jerseys/psg-home-2024-front.jpg",
-            "https://example.com/jerseys/psg-home-2024-back.jpg"
+            "/static/images/jerseys/jersey_psg_home_2024.png"
         ],
         tallas_disponibles: ["M", "L", "XL"],
         caracteristicas: {
@@ -164,8 +159,7 @@ db.jerseys.insertMany([
         descripcion: "Jersey oficial del Bayern Munich temporada 2024/2025. Rojo bávaro tradicional.",
         categoria: "Bundesliga",
         imagenes: [
-            "https://example.com/jerseys/bayern-home-2024-front.jpg",
-            "https://example.com/jerseys/bayern-home-2024-back.jpg"
+            "/static/images/jerseys/jersey_bay_home_2024.png"
         ],
         tallas_disponibles: ["S", "M", "L", "XL"],
         caracteristicas: {
@@ -182,6 +176,90 @@ db.jerseys.insertMany([
         activo: true,
         rating_promedio: 4.7,
         total_reviews: 167
+    },
+    {
+        _id: "jersey_ame_home_2024",
+        nombre: "Club América Jersey Home 2024",
+        equipo: "Club América",
+        marca: "Nike",
+        temporada: "2024/2025",
+        tipo: "Home",
+        descripcion: "Jersey oficial del Club América temporada 2024/2025. Amarillo icónico de Las Águilas.",
+        categoria: "Liga MX",
+        imagenes: [
+            "/static/images/jerseys/jersey_ame_home_2024.png"
+        ],
+        tallas_disponibles: ["S", "M", "L", "XL", "XXL"],
+        caracteristicas: {
+            material: "100% Poliéster",
+            tecnologia: "Dri-FIT",
+            corte: "Stadium Fit",
+            peso: "165g"
+        },
+        precio_base: 74.99,
+        edicion_especial: false,
+        personalizable: true,
+        tags: ["america", "nike", "liga mx", "aguilas"],
+        fecha_lanzamiento: new Date("2024-06-10"),
+        activo: true,
+        rating_promedio: 4.8,
+        total_reviews: 198
+    },
+    {
+        _id: "jersey_dor_home_2024",
+        nombre: "Borussia Dortmund Jersey Home 2024",
+        equipo: "Borussia Dortmund",
+        marca: "Puma",
+        temporada: "2024/2025",
+        tipo: "Home",
+        descripcion: "Jersey oficial del Borussia Dortmund temporada 2024/2025. Amarillo y negro característico del BVB.",
+        categoria: "Bundesliga",
+        imagenes: [
+            "/static/images/jerseys/jersey_dor_home_2024.png"
+        ],
+        tallas_disponibles: ["S", "M", "L", "XL"],
+        caracteristicas: {
+            material: "100% Poliéster reciclado",
+            tecnologia: "DryCELL",
+            corte: "Regular Fit",
+            peso: "170g"
+        },
+        precio_base: 79.99,
+        edicion_especial: false,
+        personalizable: true,
+        tags: ["dortmund", "puma", "bundesliga", "bvb"],
+        fecha_lanzamiento: new Date("2024-06-28"),
+        activo: true,
+        rating_promedio: 4.6,
+        total_reviews: 142
+    },
+    {
+        _id: "jersey_mia_home_2024",
+        nombre: "Inter Miami CF Jersey Home 2024",
+        equipo: "Inter Miami CF",
+        marca: "Adidas",
+        temporada: "2024/2025",
+        tipo: "Home",
+        descripcion: "Jersey oficial del Inter Miami CF temporada 2024/2025. Rosa característico con detalles en negro.",
+        categoria: "MLS",
+        imagenes: [
+            "/static/images/jerseys/jersey_mia_home_2024.png"
+        ],
+        tallas_disponibles: ["S", "M", "L", "XL", "XXL"],
+        caracteristicas: {
+            material: "100% Poliéster reciclado",
+            tecnologia: "Aeroready",
+            corte: "Regular Fit",
+            peso: "168g"
+        },
+        precio_base: 84.99,
+        edicion_especial: false,
+        personalizable: true,
+        tags: ["inter miami", "mls", "adidas", "miami"],
+        fecha_lanzamiento: new Date("2024-07-05"),
+        activo: true,
+        rating_promedio: 4.9,
+        total_reviews: 312
     }
 ]);
 
